@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom';
 import App from './components/app/App';
 import './style/style.scss';
 
-import MarvelService from './services/MarvelService';
 
-const marvelService = new MarvelService();
 
-// marvelService.getAllCharacters().then(res => console.log(res));
-marvelService.getAllCharacters(1011097).then(res => res.data.results.forEach(item => { console.log(item.name) }));
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
