@@ -12,25 +12,32 @@ class RandomChar extends Component {
     state = {
         char: {},
         loading: true,
-        error: false
+        error: false,
+        charId: Math.floor(Math.random() * (1011050 - 1011000) + 1011000)
     }
 
 
     marvelService = new MarvelService();
 
     componentDidMount() {
+        // console.log('componentDidMount');
         this.updateChar();
-        // this.timerId = setInterval(this.updateChar, 3000);
     }
 
     componentWillUnmount() {
-        // clearInterval(this.timerId);
+        // console.log('componentWillUnmount');
     }
 
 
+    onCharLoading = () => {
+        this.setState({
+            loading: true
+        })
+    }
+
     onCharLoaded = (char) => {
         this.setState({
-            char,
+            char,   //char: char
             loading: false
         })
     }
@@ -42,20 +49,33 @@ class RandomChar extends Component {
         })
     }
 
+
     updateChar = () => {
-        const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
+        this.setState({
+            charId: Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
+        })
+        // const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
+        console.log(this.state.charId);
+        this.onCharLoading();
         this.marvelService
-            .getCharacter(id)
+            .getCharacter(this.state.charId)
             .then(this.onCharLoaded)
             .catch(this.onError)
     }
 
-    // marvelService.getAllCharacters(1011097).then(res => res.data.results.forEach(item => { console.log(item.name) }));
+    handleError = () => {
+        console.log('error');
+        this.setState({
+            charId: 1011329,
+            error: false
+        })
+    }
 
 
     render() {
+        console.log('render');
         const { char, loading, error } = this.state;
-        const errorMessage = error ? <ErrorMessage /> : null;
+        const errorMessage = error ? this.handleError() : null;
         const spinner = loading ? <Spinner /> : null;
         const content = !(loading || error) ? <View char={char} /> : null;
 
@@ -73,7 +93,7 @@ class RandomChar extends Component {
                         Or choose another one
                     </p>
                     <button className="button button__main">
-                        <div className="inner">try it</div>
+                        <div className="inner" onClick={this.updateChar}>try it</div>
                     </button>
                     <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
                 </div>
