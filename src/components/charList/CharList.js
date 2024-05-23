@@ -10,7 +10,6 @@ class CharList extends Component {
     }
 
     marvelService = new MarvelService();
-
     componentDidMount() {
         this.fetchData();
     }
@@ -39,7 +38,9 @@ class CharList extends Component {
 
 
             return (
-                <li className="char__item" key={id} onClick={() => this.props.onCharSelected(id)}>
+                <li className="char__item"
+                    key={id}
+                    onClick={() => this.props.onCharSelected(id)}>
                     <img src={thumbnail} alt="abyss" style={imgStyle} />
                     <div className="char__name">{name}</div>
                 </li>

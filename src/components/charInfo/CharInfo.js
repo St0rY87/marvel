@@ -36,6 +36,7 @@ class CharInfo extends Component {
         }
     }
 
+
     marvelService = new MarvelService();
 
     updateChar = () => {
@@ -50,6 +51,7 @@ class CharInfo extends Component {
             .getCharacter(charId)
             .then(this.onCharLoaded)
             .catch(this.onError);
+
     }
 
 
@@ -101,7 +103,7 @@ const View = ({ char }) => {
             </div>
             <div className="char__comics">Comics:</div>
             <ul className="char__comics-list">
-                {comics.length > 0 ? null : 'There is no comics'}
+                {comics.length > 0 ? null : 'There are no comics'}
 
                 {
                     comics.map((item, i) => {

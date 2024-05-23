@@ -8,7 +8,6 @@ import mjolnir from '../../resources/img/mjolnir.png';
 
 class RandomChar extends Component {
 
-
     state = {
         char: {},
         loading: true,
@@ -54,7 +53,6 @@ class RandomChar extends Component {
         this.setState({
             charId: Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
         })
-        // const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         console.log(this.state.charId);
         this.onCharLoading();
         this.marvelService
