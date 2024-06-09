@@ -14,7 +14,6 @@ class CharList extends Component {
         offset: 310,
         charactersEnded: false,
         totalCharachters: 1564,
-
     }
 
 
@@ -67,13 +66,35 @@ class CharList extends Component {
         }
     }
 
+    selectedCurrentItem = elem => {
+        this.myRef = elem;
+    }
+
+    focusOnItem = () => {
+        if (this.myRef) {
+            this.myRef.focus();
+        }
+    }
+    // handleItemClick = (id) => {
+    //     this.focusItem();
+    //     this.props.onCharSelected(id)
+    // }
+
+    handleItemClick = (id, elem) => {
+        this.selectedCurrentItem(elem);
+        this.focusOnItem();
+        this.props.onCharSelected(id);
+    }
+
 
     render() {
         const { characters, offset, newItemLoading, charactersEnded } = this.state;
         const characterItems = characters.map(item => {
             const { name, thumbnail, id } = item;
             const refNotAvalibaleIamge = 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
-            let imgStyle = { 'objectFit': 'cover' };
+            let imgStyle = {
+                'objectFit': 'cover'
+            };
             if (thumbnail === refNotAvalibaleIamge) {
                 imgStyle = { 'objectFit': 'unset' };
             }
@@ -81,16 +102,29 @@ class CharList extends Component {
 
             return (
                 <li className="char__item"
+                    ref={this.selectedCurrentItem}
+                    tabIndex="0"
                     key={id}
-                    onClick={() => this.props.onCharSelected(id)}>
+                    onClick={(e) => this.handleItemClick(id, e.currentTarget)}
+                    onKeyDown={(e) => e.key === ' ' || e.key === 'Enter' ? (e.preventDefault(), this.handleItemClick(id, e.currentTarget)) : ''}
+
+
+                // onKeyDown={(e) => {
+                //     if (e.key === ' ' || e.key === 'Enter') {
+                //         e.preventDefault();
+                //         this.handleItemClick(id, e.currentTarget);
+                //     }
+                // }
+                // }
+                >
 
                     <img src={thumbnail} alt="abyss" style={imgStyle} />
                     <div className="char__name">{name}</div>
-                </li>
+                </li >
             )
         })
         return (
-            <div className="char__list">
+            <div className="char__list" >
                 <ul className="char__grid">
                     {characterItems}
                 </ul>
